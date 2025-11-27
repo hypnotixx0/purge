@@ -32,24 +32,10 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .error-content::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--glow-color, rgba(139, 92, 246, 0.1)), transparent 70%);
-            animation: rotate 20s linear infinite;
-            pointer-events: none;
-        }
-
         .error-icon {
             font-size: 6rem;
             color: var(--primary);
             margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 2;
             animation: bounce 2s ease-in-out infinite;
             filter: drop-shadow(0 0 20px var(--glow-color, rgba(139, 92, 246, 0.5)));
         }
@@ -62,16 +48,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
         }
 
         .error-subtitle {
             font-size: 1.5rem;
             color: var(--text);
             margin-bottom: 2rem;
-            position: relative;
-            z-index: 2;
             font-weight: 500;
         }
 
@@ -80,8 +62,6 @@
             font-size: 1rem;
             line-height: 1.6;
             margin-bottom: 2.5rem;
-            position: relative;
-            z-index: 2;
             opacity: 0.8;
         }
 
@@ -90,8 +70,6 @@
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
         }
 
         .btn {
@@ -105,8 +83,6 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
             text-decoration: none;
         }
 
@@ -134,20 +110,40 @@
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
         }
 
-        /* Auto-redirect notification */
-        .redirect-notice {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(139, 92, 246, 0.1);
+        /* Signature Styles */
+        .signature {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--light-gray);
             border-radius: 12px;
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            position: relative;
-            z-index: 2;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
         }
 
-        .redirect-countdown {
-            font-weight: 600;
+        .signature-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .signature-text {
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .signature-name {
             color: var(--primary);
+            font-weight: 600;
         }
 
         /* Animations */
@@ -158,44 +154,6 @@
             50% {
                 transform: translateY(-10px);
             }
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Error details */
-        .error-details {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(139, 92, 246, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            position: relative;
-            z-index: 2;
-        }
-
-        .error-details summary {
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .error-details pre {
-            background: var(--black);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--light-gray);
-            color: var(--text);
-            font-size: 0.85rem;
-            overflow-x: auto;
-            margin-top: 1rem;
         }
 
         /* Responsive */
@@ -224,6 +182,13 @@
                 width: 100%;
                 justify-content: center;
             }
+
+            .signature {
+                bottom: 15px;
+                left: 15px;
+                right: 15px;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -242,14 +207,13 @@
             <h2 class="error-subtitle">Page Not Found</h2>
             
             <p class="error-description">
-                The page you're looking for doesn't exist or has been moved. 
-                You'll be automatically redirected home in <span id="countdown" class="redirect-countdown">5</span> seconds.
+                The page you're looking for doesn't exist or has been moved.
             </p>
             
             <div class="error-actions">
                 <a href="index.html" class="btn btn-primary">
                     <i class="fas fa-home"></i>
-                    Go Home Now
+                    Go Home
                 </a>
                 <a href="games.html" class="btn btn-secondary">
                     <i class="fas fa-gamepad"></i>
@@ -260,11 +224,14 @@
                     View Apps
                 </a>
             </div>
-            
-            <div class="redirect-notice">
-                <i class="fas fa-info-circle"></i>
-                <span>You will be automatically redirected to the homepage.</span>
-            </div>
+        </div>
+    </div>
+
+    <!-- Signature -->
+    <div class="signature">
+        <img src="assets/e1bc9dd5-25b2-4626-9afc-694f3188bac0.ico" alt="unhiin" class="signature-avatar">
+        <div class="signature-text">
+            Best regards, <span class="signature-name">unhiin</span>
         </div>
     </div>
 
@@ -281,6 +248,5 @@
     <script src="snow.js"></script>
     <script src="tooltip-manager.js"></script>
     <script src="accessibility.js"></script>
-
 </body>
 </html>
