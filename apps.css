@@ -133,6 +133,7 @@
     justify-content: center;
     gap: 0.5rem;
     flex-wrap: wrap;
+    margin-bottom: 1rem;
 }
 
 .app-category {
@@ -143,6 +144,16 @@
     font-size: 0.8rem;
     font-weight: 600;
     border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.app-status {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .app-actions {
@@ -196,6 +207,20 @@
 .app-card.coming-soon .app-title {
     color: var(--text);
     opacity: 0.8;
+}
+
+.add-app-instructions {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(139, 92, 246, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.add-app-instructions small {
+    color: var(--text);
+    font-size: 0.8rem;
+    line-height: 1.4;
 }
 
 /* App Viewer Modal */
@@ -279,6 +304,27 @@
 .app-viewer-content {
     flex: 1;
     background: white;
+}
+
+/* Loading State */
+.app-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--black);
+    color: var(--text);
+    font-size: 1.1rem;
+}
+
+.app-loading .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    border-top: 2px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
 }
 
 /* Fullscreen styles */

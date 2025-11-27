@@ -38,6 +38,7 @@
                     <p class="app-description">A lightweight operating system emulator</p>
                     <div class="app-meta">
                         <span class="app-category">Operating System</span>
+                        <span class="app-status">External</span>
                     </div>
                 </div>
                 <div class="app-actions">
@@ -58,6 +59,7 @@
                     <p class="app-description">Web-based operating system environment</p>
                     <div class="app-meta">
                         <span class="app-category">Operating System</span>
+                        <span class="app-status">External</span>
                     </div>
                 </div>
                 <div class="app-actions">
@@ -76,6 +78,9 @@
                 <div class="app-content">
                     <h3 class="app-title">More Apps Coming</h3>
                     <p class="app-description">We're constantly adding new applications</p>
+                    <div class="add-app-instructions">
+                        <small>To add more apps, edit the APP_URLS object in apps.js</small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,7 +91,7 @@
         <div class="app-viewer-header">
             <div class="app-viewer-info">
                 <h3 id="app-viewer-title">App</h3>
-                <span id="app-viewer-url" class="app-url">app.html</span>
+                <span id="app-viewer-url" class="app-url">Loading...</span>
             </div>
             <div class="app-viewer-controls">
                 <button class="app-control-btn" onclick="refreshApp()" title="Refresh">
