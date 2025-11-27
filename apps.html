@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="apps.css">
     <link rel="stylesheet" href="tooltip.css">
-    <link rel="stylesheet" href="tab-manager.css">
 </head>
 <body>
     <!-- Background -->
@@ -45,7 +44,6 @@
                     <option value="operating-system">Operating Systems</option>
                     <option value="productivity">Productivity</option>
                     <option value="development">Development</option>
-                    <option value="entertainment">Entertainment</option>
                 </select>
             </div>
             
@@ -60,7 +58,7 @@
         <!-- Apps Grid -->
         <div class="apps-grid" id="apps-grid">
             <!-- Terbium OS App -->
-            <div class="app-card" onclick="showAppPreview('terbium-os')">
+            <div class="app-card" data-category="operating-system" onclick="showAppPreview('terbium-os')">
                 <div class="app-icon">
                     <i class="fas fa-desktop"></i>
                 </div>
@@ -81,7 +79,7 @@
             </div>
 
             <!-- Anura OS App -->
-            <div class="app-card" onclick="showAppPreview('anura-os')">
+            <div class="app-card" data-category="operating-system" onclick="showAppPreview('anura-os')">
                 <div class="app-icon">
                     <i class="fas fa-laptop-code"></i>
                 </div>
@@ -126,14 +124,14 @@
         </div>
     </div>
 
-    <!-- App Preview Modal -->
+    <!-- App Preview Modal (Games Style) -->
     <div class="app-preview-modal" id="app-preview-modal">
         <div class="preview-content" id="preview-content">
             <!-- Preview content will be loaded here -->
         </div>
     </div>
 
-    <!-- App Browser with Tabs -->
+    <!-- App Browser with Tabs (Only shows when app is opened) -->
     <div id="app-browser" class="app-browser">
         <div class="browser-tabs">
             <!-- Tabs will be dynamically added here -->
@@ -190,7 +188,6 @@
     <script src="tooltip-manager.js"></script>
     <script src="back-to-top.js"></script>
     <script src="accessibility.js"></script>
-    <script src="tab-manager.js"></script>
     <script src="apps.js"></script>
 </body>
 </html>

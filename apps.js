@@ -3,12 +3,10 @@ class AppsManager {
     constructor() {
         this.currentApp = null;
         this.isFullscreen = false;
-        this.history = [];
-        this.currentHistoryIndex = -1;
         this.tabs = [];
         this.activeTabId = null;
         
-        // APP CONFIGURATION - ADD NEW APPS HERE
+        // APP CONFIGURATION
         this.APP_URLS = {
             'terbium-os': {
                 url: 'https://terbium.top/',
@@ -26,15 +24,6 @@ class AppsManager {
                 icon: 'fas fa-laptop-code',
                 external: true
             }
-            // TO ADD MORE APPS:
-            // 'app-id': {
-            //     url: 'https://your-app-url.com/',
-            //     name: 'App Name',
-            //     description: 'App description',
-            //     category: 'category',
-            //     icon: 'fas fa-icon',
-            //     external: true/false
-            // }
         };
         
         this.init();
@@ -42,28 +31,32 @@ class AppsManager {
 
     init() {
         console.log('📱 Apps manager initialized');
-        console.log('📋 Available apps:', Object.keys(this.APP_URLS));
         this.setupEventListeners();
         this.setupSearch();
     }
 
     setupEventListeners() {
-        // Keyboard shortcuts
+        // Close preview modal when clicking outside
+        document.getElementById('app-preview-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('app-preview-modal')) {
+                this.hidePreview();
+            }
+        });
+
+        // Close preview modal with Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isAppOpen()) {
-                this.closeApp();
+            if (e.key === 'Escape') {
+                if (document.getElementById('app-preview-modal').classList.contains('active')) {
+                    this.hidePreview();
+                } else if (this.isAppOpen()) {
+                    this.closeApp();
+                }
             }
             
             if (e.key === 'F11' && this.isAppOpen()) {
                 e.preventDefault();
                 this.toggleFullscreen();
             }
-        });
-
-        // Fullscreen change event
-        document.addEventListener('fullscreenchange', () => {
-            this.isFullscreen = !this.isFullscreen;
-            this.updateFullscreenButton();
         });
 
         // Handle embed load events
@@ -79,20 +72,6 @@ class AppsManager {
                 this.showError('Failed to load app. The external service might be unavailable.');
             });
         }
-
-        // Close preview modal when clicking outside
-        document.getElementById('app-preview-modal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('app-preview-modal')) {
-                this.hidePreview();
-            }
-        });
-
-        // Close preview modal with Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && document.getElementById('app-preview-modal').classList.contains('active')) {
-                this.hidePreview();
-            }
-        });
     }
 
     setupSearch() {
@@ -156,7 +135,6 @@ class AppsManager {
     showAppPreview(appId) {
         console.log(`🔍 Showing preview for: ${appId}`);
         
-        // Check if app exists
         if (!this.APP_URLS[appId]) {
             console.error('❌ Unknown app:', appId);
             return;
@@ -208,9 +186,6 @@ class AppsManager {
         
         // Show preview modal
         previewModal.classList.add('active');
-        
-        // Track preview view
-        this.trackAppPreview(appId, appConfig);
     }
 
     hidePreview() {
@@ -223,10 +198,9 @@ class AppsManager {
         // Hide preview first
         this.hidePreview();
         
-        // Check if app exists
         if (!this.APP_URLS[appId]) {
             console.error('❌ Unknown app:', appId);
-            this.showError(`App "${appId}" not found. Check the APP_URLS configuration.`);
+            this.showError(`App "${appId}" not found.`);
             return;
         }
         
@@ -236,11 +210,8 @@ class AppsManager {
         // Create or activate tab
         this.createTab(appId, appConfig);
         
-        // Show browser
+        // Show browser (tabs appear here)
         document.getElementById('app-browser').classList.add('active');
-        
-        // Track app launch
-        this.trackAppLaunch(appId, appConfig);
     }
 
     createTab(appId, appConfig) {
@@ -250,9 +221,7 @@ class AppsManager {
             appId: appId,
             title: appConfig.name,
             url: appConfig.url,
-            icon: appConfig.icon,
-            history: [appConfig.url],
-            historyIndex: 0
+            icon: appConfig.icon
         };
         
         this.tabs.push(tab);
@@ -296,9 +265,6 @@ class AppsManager {
         // Load app in embed
         appFrame.src = tab.url;
         currentUrl.textContent = tab.url;
-        
-        // Update navigation buttons
-        this.updateNavigationButtons();
     }
 
     switchTab(tabId) {
@@ -328,11 +294,11 @@ class AppsManager {
     closeApp() {
         console.log('🔒 Closing app browser');
         
-        // Hide browser
+        // Hide browser (tabs disappear)
         document.getElementById('app-browser').classList.remove('active');
         document.getElementById('app-browser').classList.remove('fullscreen');
         
-        // Clear tabs and state
+        // Clear state
         this.tabs = [];
         this.activeTabId = null;
         this.currentApp = null;
@@ -351,69 +317,26 @@ class AppsManager {
         this.hideError();
     }
 
-    // Browser navigation methods
-    goBack() {
-        const tab = this.getActiveTab();
-        if (tab && tab.historyIndex > 0) {
-            tab.historyIndex--;
-            this.loadTabContent(tab.id);
-        }
-    }
-
-    goForward() {
-        const tab = this.getActiveTab();
-        if (tab && tab.historyIndex < tab.history.length - 1) {
-            tab.historyIndex++;
-            this.loadTabContent(tab.id);
-        }
-    }
-
+    // Browser controls
     refreshApp() {
         const appFrame = document.getElementById('app-frame');
         this.showLoading();
         appFrame.src = appFrame.src;
     }
 
-    goHome() {
-        const tab = this.getActiveTab();
-        if (tab) {
-            tab.historyIndex = 0;
-            this.loadTabContent(tab.id);
-        }
-    }
-
-    openInNewTab() {
-        const tab = this.getActiveTab();
-        if (tab) {
-            window.open(tab.url, '_blank');
-        }
-    }
-
     toggleFullscreen() {
         const appBrowser = document.getElementById('app-browser');
         
         if (!this.isFullscreen) {
-            // Enter fullscreen
             if (appBrowser.requestFullscreen) {
                 appBrowser.requestFullscreen();
-            } else if (appBrowser.webkitRequestFullscreen) {
-                appBrowser.webkitRequestFullscreen();
-            } else if (appBrowser.msRequestFullscreen) {
-                appBrowser.msRequestFullscreen();
             }
-            
             appBrowser.classList.add('fullscreen');
             this.isFullscreen = true;
         } else {
-            // Exit fullscreen
             if (document.exitFullscreen) {
                 document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
             }
-            
             appBrowser.classList.remove('fullscreen');
             this.isFullscreen = false;
         }
@@ -434,17 +357,29 @@ class AppsManager {
         }
     }
 
-    updateNavigationButtons() {
+    openInNewTab() {
         const tab = this.getActiveTab();
-        const backBtn = document.querySelector('.toolbar-btn:nth-child(1)');
-        const forwardBtn = document.querySelector('.toolbar-btn:nth-child(2)');
-        
-        if (backBtn) {
-            backBtn.disabled = !tab || tab.historyIndex <= 0;
+        if (tab) {
+            window.open(tab.url, '_blank');
         }
-        if (forwardBtn) {
-            forwardBtn.disabled = !tab || tab.historyIndex >= tab.history.length - 1;
+    }
+
+    goHome() {
+        const tab = this.getActiveTab();
+        if (tab) {
+            this.loadTabContent(tab.id);
         }
+    }
+
+    // Navigation methods (simplified for external apps)
+    goBack() {
+        // External apps handle their own navigation
+        this.showNotification('Use the app\'s own navigation controls');
+    }
+
+    goForward() {
+        // External apps handle their own navigation
+        this.showNotification('Use the app\'s own navigation controls');
     }
 
     showLoading() {
@@ -484,13 +419,8 @@ class AppsManager {
         errorEl.innerHTML = `
             <i class="fas fa-exclamation-triangle" style="margin-right: 10px;"></i>
             ${message}
-            <br><br>
-            <button onclick="this.parentElement.style.display='none'" class="app-btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
-                Dismiss
-            </button>
         `;
         errorEl.style.display = 'flex';
-        errorEl.style.flexDirection = 'column';
     }
 
     hideError() {
@@ -498,6 +428,11 @@ class AppsManager {
         if (errorEl) {
             errorEl.style.display = 'none';
         }
+    }
+
+    showNotification(message) {
+        // Simple notification for user feedback
+        console.log('💡', message);
     }
 
     isAppOpen() {
@@ -512,46 +447,6 @@ class AppsManager {
             'entertainment': 'Entertainment'
         };
         return categories[category] || 'Other';
-    }
-
-    trackAppPreview(appId, appConfig) {
-        console.log(`👀 App preview viewed: ${appId}`, appConfig);
-    }
-
-    trackAppLaunch(appId, appConfig) {
-        console.log(`📊 App launched: ${appId}`, appConfig);
-        
-        // You can integrate with your analytics service here
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'app_launch', {
-                'app_id': appId,
-                'app_name': appConfig.name,
-                'app_url': appConfig.url
-            });
-        }
-    }
-
-    // Method to add apps dynamically (for future use)
-    addApp(appId, config) {
-        if (this.APP_URLS[appId]) {
-            console.warn(`⚠️ App "${appId}" already exists. Overwriting...`);
-        }
-        
-        this.APP_URLS[appId] = config;
-        console.log(`✅ Added app: ${appId}`, config);
-        
-        // Update the apps grid if we're on the apps page
-        this.updateAppsGrid();
-    }
-
-    updateAppsGrid() {
-        // This would dynamically update the apps grid when new apps are added
-        console.log('🔄 Apps grid updated with new apps');
-    }
-
-    // Method to get all available apps
-    getAvailableApps() {
-        return Object.keys(this.APP_URLS);
     }
 }
 
@@ -592,42 +487,10 @@ function openInNewTab() {
     if (appsManager) appsManager.openInNewTab();
 }
 
-// DEVELOPMENT HELPER: Add this to console for easy app management
-window.appsManagerHelper = {
-    addApp: (id, url, name, description, category = 'other', icon = 'fas fa-cube') => {
-        if (appsManager) {
-            appsManager.addApp(id, { 
-                url, 
-                name, 
-                description, 
-                category,
-                icon,
-                external: true 
-            });
-        }
-    },
-    listApps: () => {
-        if (appsManager) {
-            return appsManager.getAvailableApps();
-        }
-    }
-};
-
 // Initialize apps manager
 let appsManager;
 
 document.addEventListener('DOMContentLoaded', function() {
     appsManager = new AppsManager();
-    
-    // Set data-category attributes for filtering
-    document.querySelectorAll('.app-card').forEach(card => {
-        const appId = card.onclick.toString().match(/'([^']+)'/)?.[1];
-        if (appId && appsManager.APP_URLS[appId]) {
-            card.dataset.category = appsManager.APP_URLS[appId].category;
-        }
-    });
-    
-    console.log('📱 Apps page ready!');
-    console.log('💡 Development tip: Use appsManagerHelper in console to manage apps');
-    console.log('   Example: appsManagerHelper.addApp("my-app", "https://example.com", "My App", "App description", "development", "fas fa-code")');
+    console.log('📱 Apps page ready with popups and tabs!');
 });

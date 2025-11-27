@@ -443,12 +443,6 @@
     font-weight: 600;
 }
 
-.preview-badge.premium {
-    background: rgba(139, 92, 246, 0.2);
-    color: var(--primary);
-    border: 1px solid var(--primary);
-}
-
 .preview-badge.external {
     background: rgba(34, 197, 94, 0.2);
     color: #22c55e;
@@ -555,7 +549,7 @@
     text-decoration: underline;
 }
 
-/* App Browser with Tabs */
+/* App Browser with Tabs (Only shows when app is opened) */
 .app-browser {
     position: fixed;
     top: 0;
