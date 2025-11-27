@@ -134,6 +134,22 @@
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
         }
 
+        /* Auto-redirect notification */
+        .redirect-notice {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .redirect-countdown {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
         /* Animations */
         @keyframes bounce {
             0%, 100% {
@@ -227,13 +243,13 @@
             
             <p class="error-description">
                 The page you're looking for doesn't exist or has been moved. 
-                Don't worry, even the best explorers get lost sometimes!
+                You'll be automatically redirected home in <span id="countdown" class="redirect-countdown">5</span> seconds.
             </p>
             
             <div class="error-actions">
                 <a href="index.html" class="btn btn-primary">
                     <i class="fas fa-home"></i>
-                    Go Home
+                    Go Home Now
                 </a>
                 <a href="games.html" class="btn btn-secondary">
                     <i class="fas fa-gamepad"></i>
@@ -245,9 +261,9 @@
                 </a>
             </div>
             
-            <div class="error-details">
-                <summary>Technical Details</summary>
-                <pre id="error-info">Loading error information...</pre>
+            <div class="redirect-notice">
+                <i class="fas fa-info-circle"></i>
+                <span>You will be automatically redirected to the homepage.</span>
             </div>
         </div>
     </div>
@@ -266,25 +282,5 @@
     <script src="tooltip-manager.js"></script>
     <script src="accessibility.js"></script>
 
-    <script>
-        // Display error information
-        document.addEventListener('DOMContentLoaded', function() {
-            const errorInfo = document.getElementById('error-info');
-            const currentUrl = window.location.href;
-            const referrer = document.referrer || 'No referrer';
-            
-            const errorDetails = {
-                'Current URL': currentUrl,
-                'Referrer': referrer,
-                'User Agent': navigator.userAgent,
-                'Timestamp': new Date().toISOString(),
-                'Path': window.location.pathname
-            };
-            
-            errorInfo.textContent = JSON.stringify(errorDetails, null, 2);
-            
-            console.log('🔍 404 Error Details:', errorDetails);
-        });
-    </script>
 </body>
 </html>
