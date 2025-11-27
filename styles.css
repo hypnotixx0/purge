@@ -1766,3 +1766,9 @@ footer {
         text-align: center;
     }
 }
+
+/* Enable scrolling - Add this anywhere in your styles.css */
+html, body {
+    overflow: auto;
+    height: auto;
+}
