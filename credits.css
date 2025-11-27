@@ -1,0 +1,489 @@
+/* Credits Page Specific Styles */
+.credits-container {
+    max-width: 800px;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Ensure container is always visible */
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.credits-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.credits-main-title {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.credits-main-subtitle {
+    color: var(--text);
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.credits-section {
+    margin-bottom: 3rem;
+    background: var(--dark);
+    border: 1px solid var(--light-gray);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.section-title {
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-title i {
+    font-size: 1.3rem;
+}
+
+/* Person Cards - Fixed Hover Effects */
+.person-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid var(--light-gray);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    /* Prevent layout shifts */
+    transform: translateY(0) scale(1);
+    position: relative;
+    z-index: 1;
+    /* Hardware acceleration */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+    /* Consistent height */
+    min-height: 120px;
+    box-sizing: border-box;
+}
+
+.person-card:hover {
+    border-color: var(--primary);
+    /* Use scale instead of translateY to prevent layout shifts */
+    transform: scale(1.02);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    /* Ensure the element stays in its position */
+    z-index: 2;
+}
+
+.lead-dev {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05));
+    border-color: var(--primary);
+    min-height: 140px;
+}
+
+/* Emotional Support Cards */
+.emotional-support-card {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+    border-color: #ff6b6b;
+    min-height: 140px;
+}
+
+.emotional-support-card:hover {
+    transform: scale(1.02);
+    z-index: 2;
+}
+
+.emotional-support-card .avatar-image {
+    border-color: #ff6b6b;
+}
+
+.emotional-support-card .avatar-placeholder {
+    border-color: #ff6b6b;
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+}
+
+.person-avatar {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    /* Smooth loading */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.avatar-image[src=""] {
+    opacity: 0;
+}
+
+.avatar-image:not([src]) {
+    opacity: 0;
+}
+
+.lead-dev .person-avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.lead-dev .avatar-image {
+    border-width: 4px;
+}
+
+/* Avatar Placeholder Styles */
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.lead-dev .avatar-placeholder {
+    border-width: 4px;
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+}
+
+.emotional-support-card .avatar-placeholder {
+    border-color: #ff6b6b;
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+}
+
+.contributor .avatar-placeholder {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.tester .avatar-placeholder {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.person-info {
+    flex: 1;
+}
+
+.person-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.lead-dev .person-name {
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.emotional-support-card .person-name {
+    color: #ff6b6b;
+    font-size: 1.5rem;
+}
+
+.person-role {
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.person-links {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.person-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--gray);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    /* Prevent layout shifts */
+    transform: scale(1);
+    position: relative;
+    /* Hardware acceleration */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.person-link:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(139, 92, 246, 0.5);
+    z-index: 3;
+}
+
+.emotional-support-card .person-link:hover {
+    background: #ff6b6b;
+}
+
+/* Three Column Layout for Lead + Emotional Support */
+.lead-support-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Testers Grid */
+.testers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    /* Prevent grid items from shifting */
+    align-items: start;
+}
+
+.tester {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    min-height: 200px;
+}
+
+.tester:hover {
+    transform: scale(1.02);
+    z-index: 2;
+}
+
+.tester .person-info {
+    width: 100%;
+}
+
+.tester .person-links {
+    justify-content: center;
+}
+
+/* Contributor */
+.contributor {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+    border-color: #10b981;
+    min-height: 140px;
+}
+
+.contributor:hover {
+    transform: scale(1.02);
+    z-index: 2;
+}
+
+.contributor .avatar-image {
+    border-color: #10b981;
+}
+
+.contributor .person-link:hover {
+    background: #10b981;
+}
+
+.lead-dev:hover {
+    transform: scale(1.02);
+    z-index: 2;
+}
+
+/* Back to Home Button */
+.credits-footer {
+    text-align: center;
+    margin-top: auto;
+    padding-top: 2rem;
+}
+
+.back-home-btn {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 4px 15px var(--glow-color);
+    /* Prevent layout shifts */
+    transform: translateY(0) scale(1);
+    position: relative;
+    /* Hardware acceleration */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.back-home-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px var(--glow-color);
+}
+
+/* Critical Loading Fixes */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.loading-screen.fade-out {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none;
+}
+
+/* Ensure main content is always visible after load */
+body.loaded .credits-container {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Prevent any blinking/flashing */
+body {
+    overflow-x: hidden;
+    background: var(--dark);
+}
+
+/* Remove any conflicting animations */
+.container {
+    animation: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .credits-container {
+        padding: 1rem;
+    }
+    
+    .credits-main-title {
+        font-size: 2.5rem;
+    }
+    
+    .credits-section {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .person-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        min-height: auto;
+    }
+    
+    /* Lead Support Layout Responsive */
+    .lead-support-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .testers-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .person-avatar {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .lead-dev .person-avatar {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .person-name {
+        font-size: 1.3rem;
+    }
+    
+    .lead-dev .person-name {
+        font-size: 1.5rem;
+    }
+    
+    .emotional-support-card .person-name {
+        font-size: 1.3rem;
+    }
+    
+    .tester {
+        min-height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .credits-main-title {
+        font-size: 2rem;
+    }
+    
+    .credits-section {
+        padding: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
+    
+    .person-card {
+        padding: 1rem;
+    }
+    
+    .person-avatar {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .lead-dev .person-avatar {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .person-link {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .tester {
+        min-height: 160px;
+    }
+}
