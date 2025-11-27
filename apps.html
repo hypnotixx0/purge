@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="apps.css">
     <link rel="stylesheet" href="tooltip.css">
+    <link rel="stylesheet" href="tab-manager.css">
 </head>
 <body>
     <!-- Background -->
@@ -26,10 +27,40 @@
             <p class="apps-subtitle">Useful applications and tools</p>
         </div>
 
+        <!-- Search and Filter Section -->
+        <div class="apps-controls">
+            <div class="search-filter-container">
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="app-search" placeholder="Search apps..." class="search-input">
+                        <button id="clear-search" class="clear-search-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <select id="category-filter" class="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="operating-system">Operating Systems</option>
+                    <option value="productivity">Productivity</option>
+                    <option value="development">Development</option>
+                    <option value="entertainment">Entertainment</option>
+                </select>
+            </div>
+            
+            <div class="request-section">
+                <button class="request-btn" onclick="window.open('https://discord.gg/bS7Xgvyuu5', '_blank');">
+                    <i class="fas fa-plus"></i>
+                    Request an App
+                </button>
+            </div>
+        </div>
+
         <!-- Apps Grid -->
-        <div class="apps-grid">
+        <div class="apps-grid" id="apps-grid">
             <!-- Terbium OS App -->
-            <div class="app-card" onclick="openApp('terbium-os')">
+            <div class="app-card" onclick="showAppPreview('terbium-os')">
                 <div class="app-icon">
                     <i class="fas fa-desktop"></i>
                 </div>
@@ -42,7 +73,7 @@
                     </div>
                 </div>
                 <div class="app-actions">
-                    <button class="app-btn" onclick="event.stopPropagation(); openApp('terbium-os')">
+                    <button class="app-btn" onclick="event.stopPropagation(); showAppPreview('terbium-os')">
                         <i class="fas fa-play"></i>
                         Launch
                     </button>
@@ -50,7 +81,7 @@
             </div>
 
             <!-- Anura OS App -->
-            <div class="app-card" onclick="openApp('anura-os')">
+            <div class="app-card" onclick="showAppPreview('anura-os')">
                 <div class="app-icon">
                     <i class="fas fa-laptop-code"></i>
                 </div>
@@ -63,7 +94,7 @@
                     </div>
                 </div>
                 <div class="app-actions">
-                    <button class="app-btn" onclick="event.stopPropagation(); openApp('anura-os')">
+                    <button class="app-btn" onclick="event.stopPropagation(); showAppPreview('anura-os')">
                         <i class="fas fa-play"></i>
                         Launch
                     </button>
@@ -84,28 +115,63 @@
                 </div>
             </div>
         </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="no-results" style="display: none;">
+            <div class="no-results-content">
+                <i class="fas fa-search"></i>
+                <h3>No apps found</h3>
+                <p>Try adjusting your search terms or <a href="https://discord.gg/bS7Xgvyuu5" target="_blank">request an app</a></p>
+            </div>
+        </div>
     </div>
 
-    <!-- App Viewer Modal -->
-    <div id="app-viewer" class="app-viewer">
-        <div class="app-viewer-header">
-            <div class="app-viewer-info">
-                <h3 id="app-viewer-title">App</h3>
-                <span id="app-viewer-url" class="app-url">Loading...</span>
-            </div>
-            <div class="app-viewer-controls">
-                <button class="app-control-btn" onclick="refreshApp()" title="Refresh">
+    <!-- App Preview Modal -->
+    <div class="app-preview-modal" id="app-preview-modal">
+        <div class="preview-content" id="preview-content">
+            <!-- Preview content will be loaded here -->
+        </div>
+    </div>
+
+    <!-- App Browser with Tabs -->
+    <div id="app-browser" class="app-browser">
+        <div class="browser-tabs">
+            <!-- Tabs will be dynamically added here -->
+        </div>
+        <div class="browser-toolbar">
+            <div class="toolbar-left">
+                <button class="toolbar-btn" onclick="goBack()" title="Back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="toolbar-btn" onclick="goForward()" title="Forward">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="toolbar-btn" onclick="refreshApp()" title="Refresh">
                     <i class="fas fa-redo"></i>
                 </button>
-                <button class="app-control-btn" onclick="toggleFullscreen()" title="Fullscreen">
+            </div>
+            <div class="toolbar-center">
+                <div class="address-bar">
+                    <i class="fas fa-lock"></i>
+                    <span id="current-url">https://example.com</span>
+                </div>
+            </div>
+            <div class="toolbar-right">
+                <button class="toolbar-btn" onclick="openInNewTab()" title="Open in New Tab">
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+                <button class="toolbar-btn" onclick="goHome()" title="Home">
+                    <i class="fas fa-home"></i>
+                </button>
+                <button class="toolbar-btn" onclick="toggleFullscreen()" title="Fullscreen">
                     <i class="fas fa-expand"></i>
                 </button>
-                <button class="app-control-btn close-btn" onclick="closeApp()" title="Close">
+                <button class="toolbar-btn close-btn" onclick="closeApp()" title="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
-        <div class="app-viewer-content">
+        <div class="browser-content">
             <embed id="app-frame" src="" type="text/html" style="width: 100%; height: 100%; border: none;">
         </div>
     </div>
@@ -124,6 +190,7 @@
     <script src="tooltip-manager.js"></script>
     <script src="back-to-top.js"></script>
     <script src="accessibility.js"></script>
+    <script src="tab-manager.js"></script>
     <script src="apps.js"></script>
 </body>
 </html>
