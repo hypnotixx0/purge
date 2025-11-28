@@ -41,9 +41,9 @@
                 
                 <select id="category-filter" class="category-filter">
                     <option value="all">All Categories</option>
-                    <option value="operating-system">Operating Systems</option>
-                    <option value="productivity">Productivity</option>
+                    <option value="browser">Browser</option>
                     <option value="development">Development</option>
+                    <option value="productivity">Productivity</option>
                 </select>
             </div>
             
@@ -57,42 +57,42 @@
 
         <!-- Apps Grid -->
         <div class="apps-grid" id="apps-grid">
-            <!-- Terbium OS App -->
-            <div class="app-card" data-category="operating-system" onclick="showAppPreview('terbium-os')">
+            <!-- Rammerhead App -->
+            <div class="app-card" data-category="browser" onclick="showAppPreview('rammerhead')">
                 <div class="app-icon">
-                    <i class="fas fa-desktop"></i>
+                    <i class="fas fa-shield-alt"></i>
                 </div>
                 <div class="app-content">
-                    <h3 class="app-title">Terbium OS</h3>
-                    <p class="app-description">A lightweight operating system emulator</p>
+                    <h3 class="app-title">Rammerhead</h3>
+                    <p class="app-description">Private browsing proxy with session management</p>
                     <div class="app-meta">
-                        <span class="app-category">Operating System</span>
+                        <span class="app-category">Browser</span>
                         <span class="app-status">External</span>
                     </div>
                 </div>
                 <div class="app-actions">
-                    <button class="app-btn" onclick="event.stopPropagation(); showAppPreview('terbium-os')">
+                    <button class="app-btn" onclick="event.stopPropagation(); showAppPreview('rammerhead')">
                         <i class="fas fa-play"></i>
                         Launch
                     </button>
                 </div>
             </div>
 
-            <!-- Anura OS App -->
-            <div class="app-card" data-category="operating-system" onclick="showAppPreview('anura-os')">
+            <!-- Scramjet App -->
+            <div class="app-card" data-category="development" onclick="showAppPreview('scramjet')">
                 <div class="app-icon">
-                    <i class="fas fa-laptop-code"></i>
+                    <i class="fas fa-rocket"></i>
                 </div>
                 <div class="app-content">
-                    <h3 class="app-title">Anura OS</h3>
-                    <p class="app-description">Web-based operating system environment</p>
+                    <h3 class="app-title">Scramjet</h3>
+                    <p class="app-description">Fast web proxy with advanced features</p>
                     <div class="app-meta">
-                        <span class="app-category">Operating System</span>
+                        <span class="app-category">Development</span>
                         <span class="app-status">External</span>
                     </div>
                 </div>
                 <div class="app-actions">
-                    <button class="app-btn" onclick="event.stopPropagation(); showAppPreview('anura-os')">
+                    <button class="app-btn" onclick="event.stopPropagation(); showAppPreview('scramjet')">
                         <i class="fas fa-play"></i>
                         Launch
                     </button>
@@ -190,4 +190,3 @@
 </body>
 
 </html>
-

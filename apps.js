@@ -8,20 +8,20 @@ class AppsManager {
         
         // APP CONFIGURATION
         this.APP_URLS = {
-            'terbium-os': {
-                url: 'https://terbium.top/',
-                name: 'Terbium OS',
-                description: 'A lightweight operating system emulator',
-                category: 'operating-system',
-                icon: 'fas fa-desktop',
+            'rammerhead': {
+                url: 'https://rammerhead.org/',
+                name: 'Rammerhead',
+                description: 'Private browsing proxy with session management and advanced privacy features',
+                category: 'browser',
+                icon: 'fas fa-shield-alt',
                 external: true
             },
-            'anura-os': {
-                url: 'https://anura.pro/',
-                name: 'Anura OS', 
-                description: 'Web-based operating system environment',
-                category: 'operating-system',
-                icon: 'fas fa-laptop-code',
+            'scramjet': {
+                url: 'https://sjet.us/',
+                name: 'Scramjet', 
+                description: 'Fast web proxy with advanced features and excellent performance',
+                category: 'development',
+                icon: 'fas fa-rocket',
                 external: true
             }
         };
@@ -365,10 +365,8 @@ class AppsManager {
     }
 
     goHome() {
-        const tab = this.getActiveTab();
-        if (tab) {
-            this.loadTabContent(tab.id);
-        }
+        // Close app and return to apps listing
+        this.closeApp();
     }
 
     // Navigation methods (simplified for external apps)
@@ -441,9 +439,9 @@ class AppsManager {
 
     getCategoryName(category) {
         const categories = {
-            'operating-system': 'Operating System',
-            'productivity': 'Productivity',
+            'browser': 'Browser',
             'development': 'Development',
+            'productivity': 'Productivity',
             'entertainment': 'Entertainment'
         };
         return categories[category] || 'Other';
@@ -492,5 +490,5 @@ let appsManager;
 
 document.addEventListener('DOMContentLoaded', function() {
     appsManager = new AppsManager();
-    console.log('📱 Apps page ready with popups and tabs!');
+    console.log('📱 Apps page ready with Rammerhead and Scramjet!');
 });
