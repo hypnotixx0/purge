@@ -17,7 +17,7 @@ class AppsManager {
                 external: true
             },
             'scramjet': {
-                url: 'https://https://ethereral.netlify.app/',
+                url: 'https://ethereral.netlify.app/',
                 name: 'Scramjet', 
                 description: 'Fast web proxy with advanced features and excellent performance',
                 category: 'development',
