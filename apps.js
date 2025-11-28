@@ -9,7 +9,7 @@ class AppsManager {
         // APP CONFIGURATION
         this.APP_URLS = {
             'rammerhead': {
-                url: 'https://rammerhead.org/',
+                url: 'https://webserverrtp.goip.de/',
                 name: 'Rammerhead',
                 description: 'Private browsing proxy with session management and advanced privacy features',
                 category: 'browser',
@@ -17,7 +17,7 @@ class AppsManager {
                 external: true
             },
             'scramjet': {
-                url: 'https://sjet.us/',
+                url: 'https://https://ethereral.netlify.app/',
                 name: 'Scramjet', 
                 description: 'Fast web proxy with advanced features and excellent performance',
                 category: 'development',
@@ -76,20 +76,11 @@ class AppsManager {
 
     setupSearch() {
         const searchInput = document.getElementById('app-search');
-        const clearSearch = document.getElementById('clear-search');
         const categoryFilter = document.getElementById('category-filter');
 
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 this.filterApps(e.target.value, categoryFilter.value);
-                clearSearch.classList.toggle('show', e.target.value.length > 0);
-            });
-
-            clearSearch.addEventListener('click', () => {
-                searchInput.value = '';
-                this.filterApps('', categoryFilter.value);
-                clearSearch.classList.remove('show');
-                searchInput.focus();
             });
         }
 
