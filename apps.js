@@ -16,9 +16,9 @@ class AppsManager {
                 icon: 'fas fa-shield-alt',
                 external: true
             },
-            'Pstream': {
-                url: 'https://pstream.mov/',
-                name: 'Pstream',
+            'Sflix': {
+                url: 'https://sudo-flix.nl/',
+                name: 'Sflix',
                 description: 'Best streaming service out there',
                 category: 'media',
                 icon: 'fa-solid fa-tv',
