@@ -11,19 +11,11 @@ class AppsManager {
             'rammerhead': {
                 url: 'https://webserverrtp.goip.de/',
                 name: 'Rammerhead',
-                description: 'Private browsing proxy with session management and advanced privacy features',
+                description: 'Private browsing proxy with session management and advanced privacy features (Dont fullscreen)',
                 category: 'browser',
                 icon: 'fas fa-shield-alt',
                 external: true
             },
-            'scramjet': {
-                url: 'https://ethereral.netlify.app/',
-                name: 'Scramjet', 
-                description: 'Fast web proxy with advanced features and excellent performance',
-                category: 'development',
-                icon: 'fas fa-rocket',
-                external: true
-            }
         };
         
         this.init();

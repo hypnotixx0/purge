@@ -132,6 +132,19 @@ class GamesManager {
                 earlyAccess: true,
                 tags: ["progressive", "action",]
             },
+            {
+                id: 14,
+                name: "Hollow Knight",
+                description: "Great story game (My all time favorite)",
+                category: "Adventure",
+                genre: "Story Game",
+                icon: "⚔️",
+                file: "games/hollowknight.html",
+                featured: true,
+                premium: true,
+                earlyAccess: true,
+                tags: ["story", "action", "adventure",]
+            },
         ];
 
         // Add play counts from stats
