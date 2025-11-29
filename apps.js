@@ -16,6 +16,14 @@ class AppsManager {
                 icon: 'fas fa-shield-alt',
                 external: true
             },
+            'Pstream': {
+                url: 'https://pstream.mov/',
+                name: 'Pstream',
+                description: 'Best streaming service out there',
+                category: 'media',
+                icon: 'fa-solid fa-tv',
+                external: true
+            },
         };
         
         this.init();
