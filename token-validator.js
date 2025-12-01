@@ -13,7 +13,7 @@
     // Valid keys (should match key-system.js)
     const VALID_KEYS = {
         free: ['IMPOOR'],
-        premium: ['PURGED']
+        premium: ['CHARLESISPOOR']
     };
     
     // Secret salt for hash generation (obfuscated)
@@ -324,3 +324,4 @@
         }
     });
 })();
+
