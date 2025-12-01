@@ -51,7 +51,7 @@ class GamesManager {
                 file: "games/balatro.html",
                 featured: true,
                 premium: true,
-                earlyAccess: true,
+                earlyAccess: false,
                 tags: ["strategy", "card", "roguelike", "premium", "featured"]
             },
             {
@@ -90,7 +90,7 @@ class GamesManager {
                 file: "games/slope.html",
                 featured: false,
                 premium: false,
-                earlyAccess: true,
+                earlyAccess: false,
                 tags: ["action", "3d",]
             },
             {
@@ -115,8 +115,8 @@ class GamesManager {
                 icon: "🏖️",
                 file: "games/tubejumpers.html",
                 featured: true,
-                premium: true,
-                earlyAccess: true,
+                premium: false,
+                earlyAccess: false,
                 tags: ["survival", "action", "fun", "cool"]
             },
             {
@@ -129,7 +129,7 @@ class GamesManager {
                 file: "games/burritobison.html",
                 featured: true,
                 premium: true,
-                earlyAccess: true,
+                earlyAccess: false,
                 tags: ["progressive", "action",]
             },
             {
