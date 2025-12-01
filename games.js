@@ -49,7 +49,7 @@ class GamesManager {
                 genre: "Card Game",
                 icon: "🃏",
                 file: "games/balatro.html",
-                featured: true,
+                featured: false,
                 premium: true,
                 earlyAccess: false,
                 tags: ["strategy", "card", "roguelike", "premium", "featured"]
@@ -114,7 +114,7 @@ class GamesManager {
                 genre: "Action",
                 icon: "🏖️",
                 file: "games/tubejumpers.html",
-                featured: true,
+                featured: false,
                 premium: false,
                 earlyAccess: false,
                 tags: ["survival", "action", "fun", "cool"]
@@ -127,7 +127,7 @@ class GamesManager {
                 genre: "Action",
                 icon: "🌮",
                 file: "games/burritobison.html",
-                featured: true,
+                featured: false,
                 premium: true,
                 earlyAccess: false,
                 tags: ["progressive", "action",]
