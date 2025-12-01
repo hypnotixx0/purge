@@ -9,9 +9,9 @@ class AppsManager {
         // APP CONFIGURATION
         this.APP_URLS = {
             'rammerhead': {
-                url: 'https://demo-opensource.rammerhead.org/',
+                url: 'https://schooltechreadong.mywire.org/',
                 name: 'Rammerhead',
-                description: 'Great web proxy pass is "sharkie4life"',
+                description: 'Great web proxy',
                 category: 'browser',
                 icon: 'fas fa-shield-alt',
                 external: true
