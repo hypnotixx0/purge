@@ -49,9 +49,9 @@ class GamesManager {
                 genre: "Card Game",
                 icon: "🃏",
                 file: "games/balatro.html",
-                featured: false,
+                featured: true,
                 premium: true,
-                earlyAccess: false,
+                earlyAccess: true,
                 tags: ["strategy", "card", "roguelike", "premium", "featured"]
             },
             {
@@ -90,7 +90,7 @@ class GamesManager {
                 file: "games/slope.html",
                 featured: false,
                 premium: false,
-                earlyAccess: false,
+                earlyAccess: true,
                 tags: ["action", "3d",]
             },
             {
@@ -114,9 +114,9 @@ class GamesManager {
                 genre: "Action",
                 icon: "🏖️",
                 file: "games/tubejumpers.html",
-                featured: false,
-                premium: false,
-                earlyAccess: false,
+                featured: true,
+                premium: true,
+                earlyAccess: true,
                 tags: ["survival", "action", "fun", "cool"]
             },
             {
@@ -127,9 +127,9 @@ class GamesManager {
                 genre: "Action",
                 icon: "🌮",
                 file: "games/burritobison.html",
-                featured: false,
+                featured: true,
                 premium: true,
-                earlyAccess: false,
+                earlyAccess: true,
                 tags: ["progressive", "action",]
             },
             {
@@ -144,6 +144,71 @@ class GamesManager {
                 premium: true,
                 earlyAccess: true,
                 tags: ["story", "action", "adventure",]
+            },
+            {
+                id: 15,
+                name: "Fnaf 1",
+                description: "Spooky",
+                category: "Action",
+                genre: "Horror",
+                icon: "🐻",
+                file: "games/fnaf1.html",
+                featured: false,
+                premium: false,
+                earlyAccess: false,
+                tags: ["story", "action", "horror",]
+            },
+            {
+                id: 16,
+                name: "Fnaf 2",
+                description: "Spooky",
+                category: "Action",
+                genre: "Horror",
+                icon: "🐻",
+                file: "games/fnaf2.html",
+                featured: false,
+                premium: false,
+                earlyAccess: false,
+                tags: ["story", "action", "horror",]
+            },
+            {
+                id: 17,
+                name: "Fnaf 3",
+                description: "Spooky",
+                category: "Action",
+                genre: "Horror",
+                icon: "🐻",
+                file: "games/fnaf3.html",
+                featured: false,
+                premium: false,
+                earlyAccess: false,
+                tags: ["story", "action", "horror",]
+            },
+            {
+                id: 18,
+                name: "Fnaf 4",
+                description: "Spooky",
+                category: "Action",
+                genre: "Horror",
+                icon: "🐻",
+                file: "games/fnaf4.html",
+                featured: false,
+                premium: false,
+                earlyAccess: false,
+                tags: ["story", "action", "horror",]
+            },
+            {
+                id: 19,
+                name: "Fnaf UCN",
+                description: "Spooky",
+                category: "Action",
+                genre: "Horror",
+                icon: "🐻",
+                file: "games/fnafucn.html",
+                featured: false,
+                premium: false,
+                earlyAccess: false,
+                tags: ["story", "action", "horror",]
             },
         ];
 

@@ -9,19 +9,11 @@ class AppsManager {
         // APP CONFIGURATION
         this.APP_URLS = {
             'rammerhead': {
-                url: 'https://webserverrtp.goip.de/',
+                url: 'https://demo-opensource.rammerhead.org/',
                 name: 'Rammerhead',
-                description: 'Private browsing proxy with session management and advanced privacy features (Dont fullscreen)',
+                description: 'Great web proxy pass is "sharkie4life"',
                 category: 'browser',
                 icon: 'fas fa-shield-alt',
-                external: true
-            },
-            'Sflix': {
-                url: 'https://sudo-flix.nl/',
-                name: 'Sflix',
-                description: 'Best streaming service out there',
-                category: 'media',
-                icon: 'fa-solid fa-tv',
                 external: true
             },
         };
