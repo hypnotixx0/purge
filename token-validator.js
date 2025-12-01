@@ -13,7 +13,7 @@
     // Valid keys (should match key-system.js)
     const VALID_KEYS = {
         free: ['IMPOOR'],
-        premium: ['CHARLESISPOOR']
+        premium: ['CHARLESISPOOR', 'UNHIIN']
     };
     
     // Secret salt for hash generation (obfuscated)

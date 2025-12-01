@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const keyStatus = document.getElementById('key-status');
         
         const freeKeys = ['IMPOOR'];
-        const premiumKeys = ['CHARLESISPOOR'];
+        const premiumKeys = ['CHARLESISPOOR', 'UNHIIN'];
         
         if (!keyInput || !keyPopup) {
             console.warn('⚠️ Key system elements missing');

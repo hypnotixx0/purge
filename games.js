@@ -167,7 +167,7 @@ class GamesManager {
                 icon: "🐻",
                 file: "games/fnaf2.html",
                 featured: false,
-                premium: false,
+                premium: true,
                 earlyAccess: false,
                 tags: ["story", "action", "horror",]
             },
@@ -193,7 +193,7 @@ class GamesManager {
                 icon: "🐻",
                 file: "games/fnaf4.html",
                 featured: false,
-                premium: false,
+                premium: true,
                 earlyAccess: false,
                 tags: ["story", "action", "horror",]
             },
@@ -207,8 +207,21 @@ class GamesManager {
                 file: "games/fnafucn.html",
                 featured: false,
                 premium: false,
-                earlyAccess: false,
+                earlyAccess: true,
                 tags: ["story", "action", "horror",]
+            },
+            {
+                id: 20,
+                name: "Basket Random",
+                description: "Goofy basketball game",
+                category: "Action",
+                genre: "Sports",
+                icon: "🏀",
+                file: "games/basketrandom.html",
+                featured: false,
+                premium: false,
+                earlyAccess: false,
+                tags: ["fun", "action", "sports",]
             },
         ];
 
