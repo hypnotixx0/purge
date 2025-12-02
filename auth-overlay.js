@@ -1,40 +1,30 @@
-// auth-overlay.js - Immersive Authentication Overlay
+// auth-overlay.js - FINAL VERSION
 (function() {
     'use strict';
     
     console.log('🚀 Loading /Purge Authentication Overlay...');
     
-    // Check if already authenticated
-    function checkAuthentication() {
-        const authData = sessionStorage.getItem('purge_auth');
-        const authLevel = sessionStorage.getItem('purge_auth_level');
+    // Check if we should show the overlay
+    function shouldShowOverlay() {
+        // Check if user is already authenticated
+        const auth = sessionStorage.getItem('purge_auth');
+        const level = sessionStorage.getItem('purge_auth_level');
         const timestamp = sessionStorage.getItem('purge_auth_timestamp');
-        const keyUsed = sessionStorage.getItem('purge_auth_key');
+        const key = sessionStorage.getItem('purge_auth_key');
         const hash = sessionStorage.getItem('purge_auth_hash');
         
-        // All required data must exist
-        if (!authData || !authLevel || !timestamp || !keyUsed || !hash) {
+        // If we have all session data, don't show overlay
+        if (auth && level && timestamp && key && hash) {
+            console.log('✅ Already authenticated, skipping overlay');
             return false;
         }
         
-        // Validate hash (simplified - full validation in token-validator.js)
-        const SALT = 'p' + 'u' + 'r' + 'g' + 'e' + '_' + 's' + 'e' + 'c' + 'r' + 'e' + 't' + '_' + '2' + '0' + '2' + '5';
-        const data = `${keyUsed}_${authLevel}_${timestamp}_${SALT}`;
-        let expectedHash = 0;
-        for (let i = 0; i < data.length; i++) {
-            const char = data.charCodeAt(i);
-            expectedHash = ((expectedHash << 5) - expectedHash) + char;
-            expectedHash = expectedHash & expectedHash;
-        }
-        expectedHash = Math.abs(expectedHash).toString(36);
-        
-        if (hash !== expectedHash) {
-            return false;
+        // Clear any incomplete session data
+        if (!auth || !level || !timestamp || !key || !hash) {
+            sessionStorage.clear();
         }
         
-        // Check session duration (30 minutes)
-        const elapsed = Date.now() - parseInt(timestamp);
-        return elapsed < (30 * 60 * 1000) && elapsed >= 0;
+        return true;
     }
     
     // Wait for page to load
@@ -48,7 +38,12 @@
                 return;
             }
             
-            initializeAuthOverlay();
+            // Check if we should show overlay
+            if (shouldShowOverlay()) {
+                initializeAuthOverlay();
+            } else {
+                console.log('✅ Session valid, overlay not needed');
+            }
         };
         
         checkLoadingComplete();
@@ -56,18 +51,18 @@
     
     function initializeAuthOverlay() {
         const overlay = document.getElementById('purge-auth-overlay');
-        if (!overlay) return;
-        
-        // Check if already authenticated
-        if (checkAuthentication()) {
-            console.log('✅ Already authenticated, skipping overlay');
+        if (!overlay) {
+            console.error('❌ Auth overlay element not found');
             return;
         }
         
         console.log('🎬 Starting authentication experience');
         
-        // Show overlay
-        overlay.classList.add('active');
+        // Show overlay immediately
+        overlay.style.display = 'block';
+        setTimeout(() => {
+            overlay.classList.add('active');
+        }, 50);
         
         // Cache elements
         const authContainer = overlay.querySelector('.auth-container');
@@ -76,17 +71,20 @@
         const submitBtn = document.getElementById('auth-submit');
         const authStatus = document.getElementById('auth-status');
         
-        // Auto-scroll after 2 seconds
+        // Auto-scroll after 2.5 seconds
         setTimeout(() => {
-            authContainer.classList.add('scrolled');
-            console.log('⬇️ Auto-scrolling to key input');
-        }, 2000);
+            if (authContainer && !authContainer.classList.contains('scrolled')) {
+                authContainer.classList.add('scrolled');
+                console.log('⬇️ Auto-scrolling to key input');
+            }
+        }, 2500);
         
         // Manual scroll on click
         overlay.addEventListener('click', function(e) {
-            if (e.target.closest('.scroll-indicator') || 
-                (e.target === overlay && !authContainer.classList.contains('scrolled'))) {
-                authContainer.classList.add('scrolled');
+            if (authContainer && !authContainer.classList.contains('scrolled')) {
+                if (e.target.closest('.scroll-indicator') || e.target === overlay) {
+                    authContainer.classList.add('scrolled');
+                }
             }
         });
         
@@ -124,10 +122,10 @@
             authStatus.className = 'auth-status';
             authStatus.textContent = '';
             
-            // Simulate network delay
+            // Validate after short delay
             setTimeout(() => {
                 const freeKeys = ['IMPOOR'];
-                const premiumKeys = ['CHARLESISPOOR', 'UNHIIN'];
+                const premiumKeys = ['CHARLESISPOOR', 'UNHIIN', 'SOSAPARTY'];
                 
                 let authLevel = null;
                 
@@ -149,7 +147,7 @@
         function grantAccess(key, level) {
             console.log(`✅ Access granted! Level: ${level}, Key: ${key}`);
             
-            // Generate session data (same as key-system.js)
+            // Generate session data
             const timestamp = Date.now().toString();
             const SALT = 'p' + 'u' + 'r' + 'g' + 'e' + '_' + 's' + 'e' + 'c' + 'r' + 'e' + 't' + '_' + '2' + '0' + '2' + '5';
             const data = `${key}_${level}_${timestamp}_${SALT}`;
@@ -161,31 +159,33 @@
             }
             const authHash = Math.abs(hash).toString(36);
             
-            // Store session data
+            // Store ALL session data
             sessionStorage.setItem('purge_auth', 'authenticated');
             sessionStorage.setItem('purge_auth_level', level);
             sessionStorage.setItem('purge_auth_timestamp', timestamp);
             sessionStorage.setItem('purge_auth_key', key);
             sessionStorage.setItem('purge_auth_hash', authHash);
             
+            console.log('💾 Session saved with all data');
+            
             // Show success message
             const levelText = level === 'premium' ? 'Premium' : 'Free';
             authStatus.className = 'auth-status success show';
             authStatus.textContent = `✅ ${levelText} access granted!`;
             
-            // Add success animation to button
+            // Add success animation
             submitBtn.classList.remove('loading');
             submitBtn.classList.add('auth-success');
             
-            // Hide overlay after delay
+            // CRITICAL: Wait for session to be fully saved
             setTimeout(() => {
                 overlay.classList.add('fade-out');
                 
-                // Show your site content after overlay fades out
+                // After overlay fades out
                 setTimeout(() => {
                     overlay.style.display = 'none';
                     
-                    // Show announcement modal if it exists
+                    // Show announcement modal
                     const announcementModal = document.getElementById('announcement-modal');
                     if (announcementModal) {
                         setTimeout(() => {
@@ -193,7 +193,15 @@
                         }, 300);
                     }
                     
-                    console.log('🎉 Authentication complete, site content visible');
+                    console.log('🎉 Authentication complete!');
+                    console.log('🔑 Key:', key);
+                    console.log('📊 Level:', level);
+                    console.log('🕐 Timestamp:', timestamp);
+                    console.log('🔐 Hash:', authHash);
+                    
+                    // Enable category navigation
+                    enableCategoryNavigation();
+                    
                 }, 800);
             }, 1500);
         }
@@ -202,6 +210,24 @@
             authStatus.className = 'auth-status error show';
             authStatus.textContent = `❌ ${message}`;
             submitBtn.classList.remove('loading');
+        }
+        
+        // Enable category links after auth
+        function enableCategoryNavigation() {
+            const categoryLinks = document.querySelectorAll('.category-box');
+            
+            categoryLinks.forEach(link => {
+                // Remove any existing click handlers
+                link.onclick = null;
+                
+                // Make sure it's a proper link
+                if (!link.getAttribute('href')) {
+                    const page = link.querySelector('h3').textContent.toLowerCase();
+                    link.setAttribute('href', page + '.html');
+                }
+            });
+            
+            console.log('🔗 Category links enabled');
         }
         
         // Add particle effect
@@ -218,7 +244,7 @@
         particlesContainer.className = 'auth-particles';
         container.appendChild(particlesContainer);
         
-        // Create 9 particles
+        // Create particles
         for (let i = 0; i < 9; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -226,8 +252,12 @@
         }
     }
     
-    // Public API for manual authentication check
-    window.checkPurgeAuth = checkAuthentication;
+    // Global function to check session
+    window.checkPurgeSession = function() {
+        const auth = sessionStorage.getItem('purge_auth');
+        const level = sessionStorage.getItem('purge_auth_level');
+        return !!(auth && level);
+    };
     
     console.log('✅ Auth overlay system loaded');
 })();
