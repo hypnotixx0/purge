@@ -273,4 +273,58 @@
         }
     </script>
 </body>
+    <!-- Purge Authentication Overlay -->
+<div id="purge-auth-overlay" class="purge-auth-overlay">
+    <div class="auth-container">
+        <!-- Welcome Section -->
+        <div class="welcome-section active">
+            <div class="welcome-content">
+                <h1 class="welcome-title">
+                    <span class="welcome-text">Welcome to</span>
+                    <span class="purge-glow">/purge</span>
+                </h1>
+                <p class="welcome-subtitle">Enter your key to begin</p>
+                <div class="scroll-indicator">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Entry Section -->
+        <div class="key-section">
+            <div class="key-content">
+                <h2 class="key-title">Access Key Required</h2>
+                <p class="key-description">Enter your premium key to access all content</p>
+                
+                <div class="key-input-wrapper">
+                    <div class="key-input-group">
+                        <input type="password" id="auth-key-input" class="auth-key-input" placeholder="Enter your key..." autocomplete="off">
+                        <button id="auth-show-key" class="auth-show-key-btn">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="key-hints">
+                        <div class="key-hint">
+                            <i class="fas fa-key"></i>
+                            <span>Free key: <code>IMPOOR</code> (Games only)</span>
+                        </div>
+                        <div class="key-hint">
+                            <i class="fas fa-crown"></i>
+                            <span>Premium keys unlock everything</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="auth-status" class="auth-status"></div>
+
+                <div class="auth-buttons">
+                    <button id="auth-submit" class="auth-submit-btn">
+                        <i class="fas fa-lock-open"></i>
+                        <span>Unlock Access</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </html>
