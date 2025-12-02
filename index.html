@@ -109,37 +109,38 @@
                 </div>
             </a>
         </div>
+        
+        <!-- Category Boxes - NOW DIRECT LINKS -->
+        <div class="categories">
+            <a href="games.html" class="category-box">
+                <div class="category-icon">🎮</div>
+                <h3>Games</h3>
+                <p>Play hundreds of unblocked games</p>
+                <div class="box-glow"></div>
+            </a>
+            
+            <a href="apps.html" class="category-box">
+                <div class="category-icon">📱</div>
+                <h3>Apps</h3>
+                <p>Useful Applications</p>
+                <div class="box-glow"></div>
+            </a>
+            
+            <a href="tools.html" class="category-box">
+                <div class="category-icon">🛠️</div>
+                <h3>Tools</h3>
+                <p>Utilities and productivity tools</p>
+                <div class="box-glow"></div>
+            </a>
 
-        <!-- Update your categories section like this -->
-<div class="categories">
-    <a href="games.html" class="category-box">
-        <div class="category-icon">🎮</div>
-        <h3>Games</h3>
-        <p>Play hundreds of unblocked games</p>
-        <div class="box-glow"></div>
-    </a>
-    
-    <a href="apps.html" class="category-box">
-        <div class="category-icon">📱</div>
-        <h3>Apps</h3>
-        <p>Useful Applications</p>
-        <div class="box-glow"></div>
-    </a>
-    
-    <a href="tools.html" class="category-box">
-        <div class="category-icon">🛠️</div>
-        <h3>Tools</h3>
-        <p>Utilities and productivity tools</p>
-        <div class="box-glow"></div>
-    </a>
-
-    <a href="roadmap.html" class="category-box">
-        <div class="category-icon">🗺️</div>
-        <h3>Roadmap</h3>
-        <p>Keep up with expected updates</p>
-        <div class="box-glow"></div>
-    </a>
-</div>
+            <a href="roadmap.html" class="category-box">
+                <div class="category-icon">🗺️</div>
+                <h3>Roadmap</h3>
+                <p>Keep up with expected updates</p>
+                <div class="box-glow"></div>
+            </a>
+        </div>
+    </div>
 
     <!-- Discord Popup -->
     <div id="popup" class="popup">
@@ -194,14 +195,71 @@
         <p>&copy; 2025 /Purge. Anyone posing as this site that isnt unhiin is false.</p>
     </footer>
 
+    <!-- NEW: Purge Authentication Overlay -->
+    <div id="purge-auth-overlay" class="purge-auth-overlay">
+        <div class="auth-container">
+            <!-- Welcome Section -->
+            <div class="welcome-section active">
+                <div class="welcome-content">
+                    <h1 class="welcome-title">
+                        <span class="welcome-text">Welcome to</span>
+                        <span class="purge-glow">/purge</span>
+                    </h1>
+                    <p class="welcome-subtitle">Enter your key to begin</p>
+                    <div class="scroll-indicator">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Entry Section -->
+            <div class="key-section">
+                <div class="key-content">
+                    <h2 class="key-title">Access Key Required</h2>
+                    <p class="key-description">Enter your premium key to access all content</p>
+                    
+                    <div class="key-input-wrapper">
+                        <div class="key-input-group">
+                            <input type="password" id="auth-key-input" class="auth-key-input" placeholder="Enter your key..." autocomplete="off">
+                            <button id="auth-show-key" class="auth-show-key-btn">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="key-hints">
+                            <div class="key-hint">
+                                <i class="fas fa-key"></i>
+                                <span>Free key: <code>IMPOOR</code> (Games only)</span>
+                            </div>
+                            <div class="key-hint">
+                                <i class="fas fa-crown"></i>
+                                <span>Premium keys unlock everything</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="auth-status" class="auth-status"></div>
+
+                    <div class="auth-buttons">
+                        <button id="auth-submit" class="auth-submit-btn">
+                            <i class="fas fa-lock-open"></i>
+                            <span>Unlock Access</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts - UPDATED ORDER -->
     <script src="debug.js"></script>
     <script src="utils.js"></script>
     <script src="title.js"></script>
     <script src="discord.js"></script>
     <script src="description.js"></script>
-    <script src="key-system.js"></script>
-    <script src="loading.js"></script>
-<script src="auth-overlay.js"></script>
+    <script src="loading.js"></script> <!-- Loading must come first -->
+    <script src="auth-overlay.js"></script> <!-- NEW: Auth overlay -->
+    <script src="token-validator.js"></script> <!-- UPDATED VERSION -->
+    <script src="category-auth.js"></script> <!-- NEW: Category auth handler -->
     <script src="tab-cloaking.js"></script>
     <script src="theme-manager.js"></script>
     <script src="themes-widget.js"></script>
@@ -241,59 +299,5 @@
             });
         }
     </script>
-        <!-- Purge Authentication Overlay -->
-<div id="purge-auth-overlay" class="purge-auth-overlay">
-    <div class="auth-container">
-        <!-- Welcome Section -->
-        <div class="welcome-section active">
-            <div class="welcome-content">
-                <h1 class="welcome-title">
-                    <span class="welcome-text">Welcome to</span>
-                    <span class="purge-glow">/purge</span>
-                </h1>
-                <p class="welcome-subtitle">Enter your key to begin</p>
-                <div class="scroll-indicator">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Key Entry Section -->
-        <div class="key-section">
-            <div class="key-content">
-                <h2 class="key-title">Access Key Required</h2>
-                <p class="key-description">Enter your premium key to access all content</p>
-                
-                <div class="key-input-wrapper">
-                    <div class="key-input-group">
-                        <input type="password" id="auth-key-input" class="auth-key-input" placeholder="Enter your key..." autocomplete="off">
-                        <button id="auth-show-key" class="auth-show-key-btn">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    <div class="key-hints">
-                        <div class="key-hint">
-                            <i class="fas fa-key"></i>
-                            <span>Free key: <code>IMPOOR</code> (Games only)</span>
-                        </div>
-                        <div class="key-hint">
-                            <i class="fas fa-crown"></i>
-                            <span>Premium keys unlock everything</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="auth-status" class="auth-status"></div>
-
-                <div class="auth-buttons">
-                    <button id="auth-submit" class="auth-submit-btn">
-                        <i class="fas fa-lock-open"></i>
-                        <span>Unlock Access</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>
