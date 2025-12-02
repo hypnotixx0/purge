@@ -1,4 +1,4 @@
-// token-validator.js - ULTRA SECURE UNBYPASSABLE VERSION
+// token-validator.js - UPDATED FOR NEW SESSION-BASED AUTH SYSTEM
 (function() {
     'use strict';
     
@@ -10,7 +10,7 @@
     const AUTH_HASH = "purge_auth_hash"; // Hash for integrity check
     const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes
     
-    // Valid keys (should match key-system.js)
+    // Valid keys (match auth-overlay.js)
     const VALID_KEYS = {
         free: ['IMPOOR'],
         premium: ['CHARLESISPOOR', 'UNHIIN']
@@ -19,14 +19,29 @@
     // Secret salt for hash generation (obfuscated)
     const SALT = 'p' + 'u' + 'r' + 'g' + 'e' + '_' + 's' + 'e' + 'c' + 'r' + 'e' + 't' + '_' + '2' + '0' + '2' + '5';
     
-    const allowedPages = ['index.html', 'blocked.html', 'themes.html', '', 'key-system.js', 'loading.js'];
+    // IMPORTANT: Update allowedPages to include ALL your main pages
+    const allowedPages = ['index.html', 'blocked.html', 'themes.html', '', 'loading.js'];
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     
     // Prevent bypass attempts
     let validationInProgress = false;
     let redirectInProgress = false;
     
-    // Generate hash for integrity check
+    console.log('🔐 Token validator checking page:', currentPage);
+    
+    // If we're on index.html and not authenticated, auth-overlay will handle it
+    if (currentPage === 'index.html') {
+        console.log('✅ On index.html - auth overlay will handle authentication');
+        return; // Don't redirect from index
+    }
+    
+    // Check if page is allowed without auth
+    if (allowedPages.includes(currentPage)) {
+        console.log('✅ Page allowed without auth:', currentPage);
+        return;
+    }
+    
+    // Generate hash for integrity check (must match auth-overlay.js)
     function generateHash(key, level, timestamp) {
         const data = `${key}_${level}_${timestamp}_${SALT}`;
         let hash = 0;
@@ -43,6 +58,8 @@
         if (redirectInProgress) return;
         redirectInProgress = true;
         
+        console.log('🚫 Redirecting to:', url);
+        
         // Clear all auth data first
         clearAuthentication();
         
@@ -56,18 +73,11 @@
                 try {
                     window.location.assign(url);
                 } catch (e3) {
-                    // Last resort - reload page
+                    // Last resort - meta refresh
                     document.body.innerHTML = `<meta http-equiv="refresh" content="0;url=${url}">`;
                 }
             }
         }
-        
-        // Backup redirect after short delay
-        setTimeout(() => {
-            if (window.location.href.indexOf('blocked.html') === -1) {
-                window.location.href = url;
-            }
-        }, 100);
     }
     
     // Anti-tampering: Protect sessionStorage
@@ -75,54 +85,7 @@
     const originalGetItem = sessionStorage.getItem;
     const originalRemoveItem = sessionStorage.removeItem;
     
-    // Monitor sessionStorage changes
-    let storageWatcher = null;
-    try {
-        storageWatcher = setInterval(() => {
-            // Check if auth data was tampered with
-            const authData = originalGetItem.call(sessionStorage, AUTH_KEY);
-            const authLevel = originalGetItem.call(sessionStorage, AUTH_LEVEL);
-            const timestamp = originalGetItem.call(sessionStorage, AUTH_TIMESTAMP);
-            const keyUsed = originalGetItem.call(sessionStorage, AUTH_KEY_USED);
-            const hash = originalGetItem.call(sessionStorage, AUTH_HASH);
-            
-            // If data exists but hash doesn't match, redirect
-            if (authData && authLevel && timestamp && keyUsed) {
-                const expectedHash = generateHash(keyUsed, authLevel, timestamp);
-                if (hash !== expectedHash) {
-                    console.log('🚫 Hash mismatch detected - redirecting');
-                    forceRedirect('blocked.html');
-                }
-            }
-        }, 2000);
-    } catch (e) {
-        console.error('Storage watcher error:', e);
-    }
-    
-    // Prevent console manipulation
-    if (typeof console !== 'undefined') {
-        const originalLog = console.log;
-        const originalWarn = console.warn;
-        const originalError = console.error;
-        
-        // Detect suspicious console activity
-        console.log = function(...args) {
-            if (args.some(arg => typeof arg === 'string' && 
-                (arg.includes('bypass') || arg.includes('sessionStorage') || 
-                 arg.includes('purge_auth')))) {
-                console.warn('⚠️ Suspicious activity detected');
-            }
-            originalLog.apply(console, args);
-        };
-    }
-    
-    console.log('🔐 Ultra-secure token validator checking page:', currentPage);
-    
-    if (allowedPages.includes(currentPage)) {
-        console.log('✅ Page allowed without auth:', currentPage);
-        return;
-    }
-    
+    // Validate key is actually in our valid list
     function validateKeyIntegrity() {
         try {
             const storedKey = originalGetItem.call(sessionStorage, AUTH_KEY_USED);
@@ -134,26 +97,24 @@
             
             // Verify the key is actually valid
             const keyUpper = storedKey.toUpperCase();
-            const isValidFree = VALID_KEYS.free.includes(keyUpper);
-            const isValidPremium = VALID_KEYS.premium.includes(keyUpper);
             
-            if (authLevel === 'free' && !isValidFree) {
-                console.log('❌ Invalid free key');
-                return false;
+            if (authLevel === 'free' && VALID_KEYS.free.includes(keyUpper)) {
+                return true;
             }
             
-            if (authLevel === 'premium' && !isValidPremium) {
-                console.log('❌ Invalid premium key');
-                return false;
+            if (authLevel === 'premium' && VALID_KEYS.premium.includes(keyUpper)) {
+                return true;
             }
             
-            return true;
+            console.log('❌ Key not in valid list:', storedKey, 'Level:', authLevel);
+            return false;
         } catch (e) {
             console.error('Key validation error:', e);
             return false;
         }
     }
     
+    // MAIN AUTH CHECK FUNCTION
     function isAuthenticated() {
         if (validationInProgress) return false;
         validationInProgress = true;
@@ -178,6 +139,8 @@
             const expectedHash = generateHash(keyUsed, authLevel, timestamp);
             if (hash !== expectedHash) {
                 console.log('❌ Hash integrity check failed');
+                console.log('Stored hash:', hash);
+                console.log('Expected hash:', expectedHash);
                 validationInProgress = false;
                 clearAuthentication();
                 return false;
@@ -201,8 +164,21 @@
             }
             
             // Check 5: Access level matches page requirements
-            if (authLevel === 'free' && currentPage !== 'games.html') {
+            // For our new system, we need to check what pages each level can access
+            
+            // Define accessible pages for each level
+            const premiumPages = ['games.html', 'apps.html', 'tools.html', 'roadmap.html', 'themes.html', 'chat.html'];
+            const freePages = ['games.html']; // Free users can only access games
+            
+            if (authLevel === 'free' && !freePages.includes(currentPage)) {
                 console.log('❌ Free user trying to access:', currentPage);
+                validationInProgress = false;
+                clearAuthentication();
+                return false;
+            }
+            
+            if (authLevel === 'premium' && !premiumPages.includes(currentPage)) {
+                console.log('❌ Premium user trying to access unauthorized page:', currentPage);
                 validationInProgress = false;
                 clearAuthentication();
                 return false;
@@ -216,14 +192,14 @@
                 return false;
             }
             
-            // All checks passed - refresh timestamp and hash
+            // All checks passed - refresh timestamp and hash for active session
             const newTimestamp = Date.now().toString();
             const newHash = generateHash(keyUsed, authLevel, newTimestamp);
             originalSetItem.call(sessionStorage, AUTH_TIMESTAMP, newTimestamp);
             originalSetItem.call(sessionStorage, AUTH_HASH, newHash);
             
             validationInProgress = false;
-            console.log('✅ User authenticated with level:', authLevel);
+            console.log('✅ User authenticated with level:', authLevel, 'Accessing:', currentPage);
             return true;
         } catch (e) {
             console.error('Auth check error:', e);
@@ -245,36 +221,24 @@
         }
     }
     
-    // Continuous validation - check every 2 seconds
+    // Continuous validation - check every 5 seconds
     function startContinuousValidation() {
         setInterval(() => {
             if (!isAuthenticated()) {
                 forceRedirect('blocked.html');
             }
-        }, 2000); // Check every 2 seconds
+        }, 5000);
         
-        // Also check on mouse movement (user activity)
-        let lastCheck = Date.now();
+        // Also check on user activity
         document.addEventListener('mousemove', () => {
-            const now = Date.now();
-            if (now - lastCheck > 5000) { // Check every 5 seconds on mouse move
-                if (!isAuthenticated()) {
-                    forceRedirect('blocked.html');
-                }
-                lastCheck = now;
-            }
-        });
-        
-        // Check on click
-        document.addEventListener('click', () => {
             if (!isAuthenticated()) {
                 forceRedirect('blocked.html');
             }
         });
         
-        // Check on keypress
-        document.addEventListener('keydown', () => {
-            if (!isAuthenticated()) {
+        // Check on visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && !isAuthenticated()) {
                 forceRedirect('blocked.html');
             }
         });
@@ -282,39 +246,34 @@
     
     // Initial check
     if (!isAuthenticated()) {
-        console.log('🚫 Redirecting to blocked.html');
+        console.log('🚫 Not authenticated, redirecting to blocked.html');
         forceRedirect('blocked.html');
     } else {
         // Start continuous validation
         startContinuousValidation();
         
-        // Also validate on focus (user switching tabs)
-        window.addEventListener('focus', () => {
-            if (!isAuthenticated()) {
-                forceRedirect('blocked.html');
-            }
-        });
-        
-        // Validate on visibility change
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden && !isAuthenticated()) {
-                forceRedirect('blocked.html');
-            }
-        });
-        
-        // Validate on page unload (prevent back button bypass)
+        // Also validate on page unload (prevent back button bypass)
         window.addEventListener('beforeunload', () => {
             if (!isAuthenticated()) {
                 clearAuthentication();
             }
         });
-        
-        // Validate on popstate (back/forward button)
-        window.addEventListener('popstate', () => {
-            if (!isAuthenticated()) {
+    }
+    
+    // Monitor sessionStorage for tampering
+    let storageWatcher = null;
+    try {
+        storageWatcher = setInterval(() => {
+            // Quick hash check every 10 seconds
+            const authData = originalGetItem.call(sessionStorage, AUTH_KEY);
+            if (authData && !isAuthenticated()) {
+                console.log('🚫 Session tampering detected!');
+                clearAuthentication();
                 forceRedirect('blocked.html');
             }
-        });
+        }, 10000);
+    } catch (e) {
+        console.error('Storage watcher error:', e);
     }
     
     // Cleanup on page unload
@@ -324,4 +283,3 @@
         }
     });
 })();
-
