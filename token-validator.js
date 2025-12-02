@@ -13,7 +13,7 @@
     // Valid keys (match auth-overlay.js)
     const VALID_KEYS = {
         free: ['IMPOOR'],
-        premium: ['CHARLESISPOOR', 'UNHIIN']
+        premium: ['CHARLESISPOOR', 'UNHIIN', 'SOSAPARTY']
     };
     
     // Secret salt for hash generation (obfuscated)
@@ -283,3 +283,4 @@
         }
     });
 })();
+
